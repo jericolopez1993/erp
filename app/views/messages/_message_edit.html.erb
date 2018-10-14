@@ -1,0 +1,87 @@
+<div class="chat-message-form" id="chatroom_message">
+	<div class="form-group">
+	  	<%= form_for [chatroom, message], format: 'js', remote: true do |f| %>
+        <div style="text-align: center;">
+            <% if message.attachment_data? %>
+              <% 
+              attachment_data = JSON.parse(message.attachment_data, object_class: OpenStruct) 
+              mime_type = attachment_data.original.metadata.mime_type
+              %>
+              <% if is_downloadable_file?(mime_type)%>
+                <div style="text-align: left;">
+                  <br>
+                  <%= file_icon(mime_type) %>
+                  <%= link_to attachment_data.original.metadata.filename, message.attachment_url(:original), download: attachment_data.original.metadata.filename %>
+                </div>
+              <% else %>
+                <div class="feed-photo">
+                  <br>
+                  <%= image_tag message.attachment_url(:original), class: "msg_image" %>  
+                </div>
+              <% end %>
+              <button id="remove_img" type="button" class="btn btn-default btn-xs">Remove</button>
+          <% end %>
+        </div>
+        <div class="input-group" style="margin-top: 15px;">
+          <%= f.text_area :body, rows: 1, class: "form-control message-body", autofocus: true, placeholder: "Enter message text", autocomplete: "off" %>
+        </div>
+		    <div class="pull-right">
+          <%= link_to cancel_msg_update_orders_path(message), class: "btn btn-outline btn-link", remote: true do %>
+            <small style="cursor: pointer;">Cancel</small>
+          <% end %>
+          <%= button_tag(type: "submit", class: "btn btn-outline btn-link") do %>
+                <small class="text-link" style="cursor: pointer;">Update</small>
+            <% end %>
+        </div>
+	  	<% end %>
+
+  	<script type="text/javascript">
+      function getCaret(el) { 
+        if (el.selectionStart) { 
+          return el.selectionStart; 
+        } else if (document.selection) { 
+          el.focus(); 
+
+          var r = document.selection.createRange(); 
+          if (r == null) { 
+            return 0; 
+          } 
+
+          var re = el.createTextRange(), 
+              rc = re.duplicate(); 
+          re.moveToBookmark(r.getBookmark()); 
+          rc.setEndPoint('EndToStart', re); 
+
+          return rc.text.length; 
+        }  
+        return 0; 
+      }
+
+      $('textarea').keypress(function (event) {
+       if (event.keyCode == 13 && event.ctrlKey) {
+           var content = this.value;
+           var caret = getCaret(this);
+           this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
+           event.stopPropagation();
+           
+        }else if(event.keyCode == 13)
+        {
+            event.preventDefault();
+            $('#new_message').submit();
+        }
+      });
+
+      function expandTextarea(id) {
+          var $element = $('.message-body').get(0);  
+          
+          $element.addEventListener('keyup', function() {
+              this.style.height = 0;
+              this.style.height = this.scrollHeight + 'px';
+          }, false);
+      }
+
+      expandTextarea('txtarea');
+
+  	</script>
+	</div>
+</div>

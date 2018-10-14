@@ -1,0 +1,117 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Orders</h2>
+        <ol class="breadcrumb">
+            <li>
+                <%= link_to 'Dashboard', admin_root_path %>
+            </li>
+            <li>
+                <%= link_to 'Orders List', admin_orders_path %>
+            </li>
+            <li class="active">
+                <strong><%= "Order-#{@order.id}" %></strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox product-detail">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="product-main-price pull-right">
+                                <%= number_to_currency(@order.total_cost, unit: '$', :precision => 2, :delimiter => ',') %><br>
+                                <small class="text-muted">Total Cost</small> 
+                            </h2>
+
+                            <h2 class="font-bold m-b-xs text-warning">
+                                <%= "Order-#{@order.id}" %>
+                            </h2>
+                            <small style="font-size: 11px;"><%= @order.created_at.strftime("%d-%b-%Y %I:%M%P") %></small>
+                            <div>
+                                <div class="btn-group">
+                                    <%= link_to edit_admin_order_path(@order), class: "btn btn-primary btn-xs" do %>
+                                        <i class="fa fa-pencil"></i> Edit Order
+                                    <% end %>
+                                    <%= link_to admin_orders_path, class: "btn btn-white btn-xs" do %>
+                                        <i class="fa fa-bars"></i> Back to List
+                                    <% end %>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <h4>Order Details</h4>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="dl-horizontal m-t-md small">
+                                <dt>Delivery Address</dt>
+                                <dd><%= !@order.delivery_address.nil? ? Address.find(@order.delivery_address).full_address : 'N/A' %></dd>
+
+                                <dt>Brand</dt>
+                                <dd>
+                                    <% if @order.brand.present? %>        
+                                        <%= link_to @order.brand.name, admin_brand_path(@order.brand) %>
+                                    <% else %>
+                                        N/A
+                                    <% end %>
+                                </dd>
+
+                                <dt>Customer</dt>
+                                <dd>
+                                    <% if @order.customer.present? %>
+                                        <%= link_to @order.customer.name, admin_customer_path(@order.customer) %>
+                                    <% else %>
+                                        N/A
+                                    <% end %>
+                                </dd>
+                            </dl>
+
+                            <hr>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="dl-horizontal m-t-md small">
+                                <dt>Payment Address</dt>
+                                <dd><%= !@order.payment_address.nil? ? Address.find(@order.payment_address).full_address : 'N/A' %></dd>
+
+                                <dt>Created By</dt>
+                                <dd><%= @order.created_by.nil? ? 'N/A' : @order.created_by %></dd>
+
+                                <dt>Notes</dt>
+                                <dd><%= @order.notes.nil? ? 'N/A' : @order.notes %></dd>
+                            </dl>
+
+                            <hr>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+             <div class="ibox">
+                <div class="ibox-title text-info">
+                    Items
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive" style="overflow: visible;">
+                        <table class="table table-hover issue-tracker">
+                            <tbody id="tbody_orders">
+                                <% @order.order_entries.each do |oe| %> 
+                                    <% if oe.present? %>
+                                        <%= render '/admin/products/product', oe: oe %>
+                                    <% end %>
+                                <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

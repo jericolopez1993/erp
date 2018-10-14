@@ -1,0 +1,15 @@
+<%= render "form" %>
+<% if @results %>
+  <div class="row">
+    <div class="col">
+      <% if  @results.each do |key, results| %>
+        <% is_all_or_nil = [nil, "all"].include?(params[:filter_by]) %>
+        <% all_results = is_all_or_nil ? results.first(3) : results %>
+        <%= render "#{key.downcase}_result", 
+          results: all_results, show_see_more: is_all_or_nil && results.size > 3 %>
+      <% end.empty? %>
+        Nothing found
+      <% end %>
+    </div>
+  </div>
+<% end %>

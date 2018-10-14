@@ -1,0 +1,67 @@
+<div class="row" style="position:relative; height: 100%;">
+  <div class="col-md-4">
+    <div class="wrapper">
+      <% @chatroom_orders.each do |chatroom| %>
+        <%= link_to chatroom_order_load_messages_path(chatroom), style: "width: 100%", remote: true do %>
+          <div class="vote-item">
+              <div class="row">
+                  <div class="col-md-12">
+                      <span class="vote-title">
+                        <%= "Order-#{chatroom.id}" %>
+                      </span>
+                      <div class="vote-info">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <i class="fa fa-comments-o"></i> <span class="count"> <%= chatroom.messages.count %></span> 
+                          </div>
+                          <div class="col-md-5">
+                            <i class="fa fa-clock-o"></i> <span class="count"> <%= chatroom.messages.last.created_at.strftime("%d-%m-%Y") %></span> 
+                          </div>
+                          <div class="col-md-3">
+                            <i class="fa fa-user"></i> <span class="count"> <%= chatroom.order_users.count %></span>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+  <div class="col-md-8">
+    <div class="gray-bg ibox" style=" background-color: #f3f3f4!important;">
+      <div class="ibox-title">
+        <div  id="chatroom_title">
+          <%= render '/chatroom_orders/chatroom_title', chatroom: @chatroom %>
+        </div>
+      </div>
+      <% if @chatroom.present? %>
+        <div class="ibox-content" id="chat_messages">
+          
+            <div class="feed-activity-list" >
+              <%= render '/messages/messages', active_room: @chatroom, messages: @chatroom.messages.order(created_at: :desc).limit(100).reverse %>
+            </div>
+          
+        </div>
+      <% end %>
+    </div>
+    <div class="chat-message-form" id="chatroom_message">
+      <%= render '/chatroom_orders/chatroom_message', chatroom: @chatroom %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function() {
+      $('.ibox-content').slimScroll({
+          railOpacity: 0.4,
+          start: 'bottom',
+          height: '550px',
+      });
+
+      var chat_messages = document.getElementById('chat_messages');
+      var height = chat_messages.scrollHeight;
+      $(chat_messages).scrollTop(height);
+  })
+</script>

@@ -1,0 +1,142 @@
+<div id="wrapper">
+	<nav class="navbar-default navbar-static-side" role="navigation" style="background-color: #2f4050; height: 100%; position: fixed;">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu" style="height: auto;">
+            	<li class="nav-header">
+                    <div class="dropdown profile-element"> 
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> 
+                                <span class="block m-t-xs"> 
+                                    <strong class="font-bold">
+                                        <%= current_user.full_name %>
+                                    </strong>
+                                 </span> 
+                                 <span class="text-muted text-xs block">
+                                    Profile <b class="caret"></b>
+                                </span> 
+                            </span> 
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="profile.html">Profile</a></li>
+                            <li><a href="contacts.html">Contacts</a></li>
+                            <li><a href="mailbox.html">Mailbox</a></li>
+                            <li class="divider"></li>
+                            <li><a href="login.html">Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="special_link">
+                    <%= link_to authenticated_root_path do %>
+                        <i class="fa fa-backward"></i> 
+                        <span class="nav-label">Sales Page</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to admin_root_path do %>
+                        <i class="fa fa-cogs"></i> 
+                        <span class="nav-label">Dashboard</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to admin_notifications_path do %>
+                        <i class="fa fa-bell"></i> 
+                        <span class="nav-label">Notifications </span>
+                        <% if user_notification_count > 0 %>
+                            <span class="label label-warning pull-right"><%= user_notification_count %></span>
+                        <% end %>
+                    <% end %>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-bar-chart-o"></i> 
+                        <span class="nav-label">Orders</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li>
+                            <%= link_to 'Orders', admin_orders_path %>
+                        </li>
+                        <li>
+                            <%= link_to 'Archive Orders', admin_archive_orders_path %>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <%= link_to admin_customers_path do %>
+                        <i class="fa fa-globe"></i> 
+                        <span class="nav-label">Customers</span>
+                    <% end %>
+                </li>
+            	<li>
+                    <%= link_to admin_users_path do %>
+                    	<i class="fa fa-users"></i> 
+                    	<span class="nav-label">Users</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to admin_inventories_path do %>
+                        <i class="fa fa-bars"></i> 
+                        <span class="nav-label">Inventories</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to admin_vendors_path do %>
+                        <i class="fa fa-cubes"></i> 
+                        <span class="nav-label">Vendors</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to admin_products_path do %>
+                        <i class="fa fa-th-large"></i> 
+                        <span class="nav-label">Products</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to admin_categories_path do %>
+                        <i class="fa fa-bookmark"></i> 
+                        <span class="nav-label">Categories</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to admin_brands_path do %>
+                        <i class="fa fa-cube"></i> 
+                        <span class="nav-label">Brands</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to admin_hotels_path do %>
+                        <i class="fa fa-bank"></i> 
+                        <span class="nav-label">Hotels</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to admin_groups_path do %>
+                        <i class="fa fa-object-group"></i> 
+                        <span class="nav-label">Groups</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to admin_style_attributes_path do %>
+                        <i class="fa fa-paint-brush"></i> 
+                        <span class="nav-label">Style Attributes</span>
+                    <% end %>
+                </li>
+              <li>
+                <%= link_to admin_default_templates_path do %>
+                  <i class="fa fa-envelope-open"></i>
+                  <span class="nav-label">Default Template</span>
+                <% end %>
+              </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<script type="text/javascript">
+	$(function(){
+        $('#side-menu').metisMenu();
+        $('.sidebar-collapse').slimScroll({
+            height: 'auto',
+            color: '#fff'
+        });
+	})
+</script>

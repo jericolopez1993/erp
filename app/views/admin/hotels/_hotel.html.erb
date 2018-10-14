@@ -1,0 +1,35 @@
+<tr id="hotel-<%= hotel.id %>">
+    <td class="issue-info" style="width: 20%;">
+        <a href="#">
+            <%= link_to hotel.name, admin_hotel_path(hotel), class: 'prime-link' %>
+        </a>
+
+        <small>
+            Name
+        </small>
+    </td>
+    <td class="issue-info" style="width: 20%;">
+        <a href="#">
+            <%= hotel.address.present? ? hotel.address.street : 'N/A' %>
+        </a>
+        <small>
+            Address
+        </small>
+    </td>
+    <td class="issue-info" style="width: 10%;">
+        <a href="#">
+            <%= hotel.email %>
+        </a>
+        <small>
+            Email
+        </small>
+    </td>
+    <td class="issue-info" style="width: 10%;">
+        <a href="#">
+            <%= hotel.contact_number %>
+        </a>
+        <small>
+            Contact Number
+        </small>
+    </td>
+</tr>

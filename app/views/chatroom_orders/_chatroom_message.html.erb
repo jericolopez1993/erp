@@ -1,0 +1,83 @@
+<div class="form-group">
+  <%= form_for [chatroom, Message.new], format: 'js', remote: true do |f| %>
+  	<div class="input-group input-group-sm">
+  		<%= f.text_area :body, rows: 1, class: "form-control message-body py-1 px-1", autofocus: true, placeholder: "Enter message text", autocomplete: "off" %>
+
+      <span class="input-group-append"> 
+        <label class="btn btn-primary border-right btn-bitbucket btn-file mb-0 px-3 py-2" style="z-index: 1;">
+            <i class="fa fa-paperclip"></i>
+            <%= f.file_field :attachment, id: 'message-attachment', class: 'd-none', title: "Image upload" %>
+        </label>
+        <%= f.submit "Send", class: "btn btn-primary", style: "z-index: 1;"%>
+      </span>
+
+    </div>
+  <% end %>
+
+  <script type="text/javascript">
+      function getCaret(el) { 
+        if (el.selectionStart) { 
+          return el.selectionStart; 
+        } else if (document.selection) { 
+          el.focus(); 
+
+          var r = document.selection.createRange(); 
+          if (r == null) { 
+            return 0; 
+          } 
+
+          var re = el.createTextRange(), 
+              rc = re.duplicate(); 
+          re.moveToBookmark(r.getBookmark()); 
+          rc.setEndPoint('EndToStart', re); 
+
+          return rc.text.length; 
+        }  
+        return 0; 
+      }
+
+      $('textarea').keypress(function (event) {
+        var text_class = $(event.target).attr('class');
+
+          if (text_class == 'form-control message-body py-1 px-1') {
+            
+            if (event.keyCode == 13 && event.ctrlKey) {
+              var content = this.value;
+              var caret = getCaret(this);
+              this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
+              event.stopPropagation();
+            }
+            else if(event.keyCode == 13)
+            {
+                event.preventDefault();
+                $('#new_message').submit();
+            }
+          }
+            
+          else {
+            if (event.keyCode == 13) {
+              var content = this.value;
+              var caret = getCaret(this);
+              this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
+              event.stopPropagation();
+              event.preventDefault();
+            }
+          }
+
+      });
+
+      function expandTextarea(id) {
+          var $element = $('.message-body').get(0);  
+          
+          $element.addEventListener('keyup', function() {
+              this.style.height = 0;
+              this.style.height = this.scrollHeight + 'px';
+          }, false);
+      }
+
+      expandTextarea('txtarea');
+
+
+  </script>
+
+</div>
