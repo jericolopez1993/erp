@@ -55,7 +55,6 @@ gem 'roo'
 gem 'figaro'
 gem 'feathericon-rails'
 
-gem 'shrine', '~> 2.6'
 gem 'fastimage'
 gem 'image_processing'
 gem 'mini_magick'
