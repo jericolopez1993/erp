@@ -1,41 +1,41 @@
-DefaultTemplate.destroy_all
-DefaultTemplate.create!(:template_type=> "Quote", :message => "Estimate Request<br/><br/>Hello<br/><br/>We’d like to receive a quotation on the following items below with the listed specs. Attached are the mock ups and print ready files below.<br/><br/>Please get back to us before in a few days.<br/><br/>Thanks,<br/>Regency Management<br/><br/>")
-DefaultTemplate.create!(:template_type=> "Order", :message => "Estimate Request<br/><br/>Hello<br/><br/>We’d like to receive a quotation on the following items below with the listed specs. Attached are the mock ups and print ready files below.<br/><br/>Please get back to us before in a few days.<br/><br/>Thanks,<br/>Regency Management<br/><br/>")
-
-ProductType.destroy_all
-ProductType.create!([
-  {name: 'Discount'},
-  {name: 'Group'},
-  {name: 'Inventory Assembly'},
-  {name: 'Inventory Part'},
-  {name: 'Non Inventory Part'},
-  {name: 'Other Charge'},
-  {name: 'Sales Tax Item'},
-  {name: 'Service'}
-])
-
-ProductAccount.destroy_all
-ProductAccount.create!([
-  {name: 'Bad Debt'},
-  {name: 'Loans & Exchanges'},
-  {name: 'Professional Fees'},
-  {name: 'Purchase'},
-  {name: 'Shareholder Distribution'},
-  {name: 'Taxes Payable'}
-])
-
-ProductCog.destroy_all
-ProductCog.create!([
-  {name: 'Purchase'},
-  {name: 'Sales'},
-  {name: 'Cost of Goods Sold'}
-])
-
-ProductAssetAccount.destroy_all
-ProductAssetAccount.create!([
-  {name: 'Inventory Asset'},
-  {name: 'Purchase'}
-])
+# DefaultTemplate.destroy_all
+# DefaultTemplate.create!(:template_type=> "Quote", :message => "Estimate Request<br/><br/>Hello<br/><br/>We’d like to receive a quotation on the following items below with the listed specs. Attached are the mock ups and print ready files below.<br/><br/>Please get back to us before in a few days.<br/><br/>Thanks,<br/>Regency Management<br/><br/>")
+# DefaultTemplate.create!(:template_type=> "Order", :message => "Estimate Request<br/><br/>Hello<br/><br/>We’d like to receive a quotation on the following items below with the listed specs. Attached are the mock ups and print ready files below.<br/><br/>Please get back to us before in a few days.<br/><br/>Thanks,<br/>Regency Management<br/><br/>")
+#
+# ProductType.destroy_all
+# ProductType.create!([
+#   {name: 'Discount'},
+#   {name: 'Group'},
+#   {name: 'Inventory Assembly'},
+#   {name: 'Inventory Part'},
+#   {name: 'Non Inventory Part'},
+#   {name: 'Other Charge'},
+#   {name: 'Sales Tax Item'},
+#   {name: 'Service'}
+# ])
+#
+# ProductAccount.destroy_all
+# ProductAccount.create!([
+#   {name: 'Bad Debt'},
+#   {name: 'Loans & Exchanges'},
+#   {name: 'Professional Fees'},
+#   {name: 'Purchase'},
+#   {name: 'Shareholder Distribution'},
+#   {name: 'Taxes Payable'}
+# ])
+#
+# ProductCog.destroy_all
+# ProductCog.create!([
+#   {name: 'Purchase'},
+#   {name: 'Sales'},
+#   {name: 'Cost of Goods Sold'}
+# ])
+#
+# ProductAssetAccount.destroy_all
+# ProductAssetAccount.create!([
+#   {name: 'Inventory Asset'},
+#   {name: 'Purchase'}
+# ])
 
 User.destroy_all
 Message.destroy_all
