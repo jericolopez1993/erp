@@ -13,8 +13,6 @@
 //= require rails-ujs
 //= require jquery.min
 //= require turbolinks
-//= require popper.min
-//= require bootstrap.min
 //= require summernote/summernote-bs4.min
 //= require grasp_mobile_progress_circle-1.0.0.min
 //= require jquery.cookie
