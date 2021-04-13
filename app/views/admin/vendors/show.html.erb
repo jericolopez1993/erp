@@ -1,0 +1,253 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Vendors</h2>
+        <ol class="breadcrumb">
+            <li>
+                <%= link_to 'Dashboard', admin_root_path %>
+            </li>
+            <li>
+                <%= link_to 'Vendors List', admin_vendors_path %>
+            </li>
+            <li class="active">
+                <strong><%= @vendor.name %></strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="ibox product-detail">
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-md-4">
+
+                                    <h2 class="font-bold m-b-xs">
+                                        <%= @vendor.name %>
+                                    </h2>
+                                    <small><%= @vendor.email %></small><br>
+                                    <hr>
+
+                                    <h4>Vendor Details</h4>
+
+                                    <dl class="dl-horizontal m-t-md small">
+                                        <dt>Address</dt>
+                                        <dd><%= @vendor.billing_address.present? ? Address.find(@vendor.billing_address).street : 'N/A' %></dd>
+
+                                        <dt>Lead Time</dt>
+                                        <dd><%= @vendor.lead_time %></dd>
+
+                                        <dt>Country of Origin</dt>
+                                        <dd>
+                                            <span class="<%= @vendor.country_name == 'China' ? 'label label-danger' : 'label label-primary' %>">
+                                                <%= @vendor.country_name %>    
+                                            </span>
+                                        </dd>
+                                    </dl>
+
+                                    <hr>
+
+                                    <div>
+                                        <div class="btn-group">
+                                            <%= link_to edit_admin_vendor_path(@vendor), class: "btn btn-primary btn-xs" do %>
+                                                <i class="fa fa-pencil"></i> Edit Vendor
+                                            <% end %>
+                                            <%= link_to admin_vendors_path, class: "btn btn-white btn-xs" do %>
+                                                <i class="fa fa-bars"></i> Back to List
+                                            <% end %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="tabs-container">
+                                        <div class="nav nav-tabs" role="tablist">
+                                            <a class="nav-item nav-link active" data-toggle="tab" href="#tab-1"> Products</a>
+                                            <a class="nav-item nav-link" data-toggle="tab" href="#tab-2"> Categories</a>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div id="tab-1" class="tab-pane active">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive" style="overflow: visible;">
+                                                        <%= form_for [:admin, @vendors_product], remote: true do |f| %>
+                                                            <dl class="dl-horizontal">
+                                                                <dt>
+                                                                    <small>Attach Product</small> 
+                                                                </dt>
+                                                                <dd>
+                                                                    <%= f.collection_select( :product_id, Product.all, :id, :name, {include_blank: true}, {id: "product_selection", class: "chosen-select"})%>
+                                                                </dd>
+                                                                <dd>
+                                                                    <%= f.hidden_field :vendor_id, value: @vendor.id %>
+                                                                    <button class="btn btn-primary btn-sm pull-right">Save</button>     
+                                                                </dd>
+                                                                
+                                                            </dl>
+                                                        <% end %>
+                                                        
+                                                        <%= render 'vendor_product', vendor: @vendor %>    
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="tab-2" class="tab-pane">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive" style="overflow: visible;">
+                                                        <%= form_for [:admin, @vendor_category], remote: true do |f| %>
+                                                            <dl class="dl-horizontal">
+                                                                <dt>
+                                                                    <small>Attach Category</small> 
+                                                                </dt>
+                                                                <dd>
+                                                                    <%= f.collection_select( :category_id, Category.all, :id, :name, {include_blank: true}, {id: "category_selection", class: "chosen-select"})%>
+                                                                </dd>
+                                                                <dd>
+                                                                    <%= f.hidden_field :vendor_id, value: @vendor.id %>
+                                                                    <button class="btn btn-primary btn-sm pull-right">Save</button>     
+                                                                </dd>
+                                                                
+                                                            </dl>
+                                                        <% end %>
+                                                        
+                                                        <%= render 'vendor_category', vendor: @vendor %>    
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="ibox-footer">
+                            <span class="pull-right">
+                                Created at - <i class="fa fa-clock-o"></i> <%= @vendor.created_at.strftime("%d-%b-%Y %I:%M%P") %>
+                            </span>
+                            -
+                        </div>
+                    </div>
+
+                    <div class="ibox">
+                        <div class="ibox-title text-info">
+                            Associated Projects
+                        </div>
+                        <div class="ibox-content">
+                            <div class="table-responsive" style="overflow: visible;">
+                                <table class="table table-hover issue-tracker">
+                                    <tbody>
+                                        <% @vendor.order_entries.each do |oe| %>
+                                            <% if oe.order.present? %>
+                                                <tr>
+                                                    <td class="issue-info" style="width: 10%;">
+                                                        <a href="#">
+                                                            <%= "Order-#{oe.order.id}" %>
+                                                        </a>
+
+                                                        <small>
+                                                            <%= oe.order.created_at.strftime("%d-%b-%C %I:%M%P") %>
+                                                        </small>
+                                                    </td>
+                                                    <td class="issue-info" style="width: 15%;">
+                                                        <small>
+                                                            <strong>
+                                                                <a href="#">
+                                                                    <%= oe.order.customer.present? ? oe.order.customer.customer_fullname : 'N/A' %>
+                                                                </a>
+                                                            </strong>
+                                                        </small>
+                                                        <small>
+                                                            Customer
+                                                        </small>
+                                                    </td>
+                                                    <td class="issue-info" style="width: 15%;">
+                                                        <%= link_to admin_product_path(oe.product_id) do %>
+                                                            <small>
+                                                                <% if oe.product.image_data? %>
+                                                                    <%= image_tag oe.product.image_url(:original), class: "img-circle m-b-md", style: "height: 30px; width: 30px; margin-bottom: 5px;" %>  
+                                                                <% else %>
+                                                                    <%= image_tag 'default-product.png', class: "img-circle m-b-md", style: "height: 30px; width: 30px; margin-bottom: 5px;" %>  
+                                                                <% end %>
+                                                            
+                                                                <%= oe.product.name %>
+                                                            </small>
+                                                        <% end %>
+                                                    </td>
+                                                    <td class="issue-info" style="width: 5%;">
+                                                        <a href="#">
+                                                            <%= number_to_currency(oe.quantity, unit: "", :precision => 2, :delimiter => ',') %>
+                                                        </a>
+                                                        <small>
+                                                            Quantity
+                                                        </small>
+                                                    </td>
+                                                    <td class="issue-info" style="width: 5%;">
+                                                        <a href="#">
+                                                            <%= number_to_currency(oe.price, unit: "$ ", :precision => 2, :delimiter => ',') %>
+                                                        </a>
+                                                        <small>
+                                                            Price
+                                                        </small>
+                                                    </td>
+                                                    <td class="issue-info" style="width: 5%;">
+                                                        <a href="#">
+                                                            <strong>
+                                                                <%= number_to_currency((oe.price.nil? ? 0 : oe.price) * (oe.quantity.nil? ? 0 : oe.quantity), unit: "$ ", :precision => 2, :delimiter => ',') %>
+                                                            </strong>
+                                                        </a>
+                                                        <small>
+                                                            Total
+                                                        </small>
+                                                    </td>
+                                                </tr>
+                                            <% end %>
+                                        <% end %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="ibox">
+                            <div class="ibox-title text-info">
+                                Vendor Reviews
+                                <a href="#new_review" data-toggle="collapse" aria-expanded="false" class="btn btn-xs btn-success pull-right"> Create New Review </a>
+                            </div>
+                            <div class="ibox-content" style="background-color: #dee2e6;">
+                                <div id="new_review" class="panel-collapse collapse" aria-expanded="false">
+                                    
+                                    <%= form_for [:admin, @vendor, @vendor_review], remote: true, html: { class: "form-horizontal"} do |f| %>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="input-group">
+                                                    <%= f.text_field :review, class: "form-control" %> 
+                                                    <span class="input-group-btn"> 
+                                                        <%= button_tag(type: 'Submit', class: "btn btn-primary") do %>
+                                                            Save
+                                                        <% end %> 
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% end %>
+
+                                </div>
+                                <div>
+                                    <%= render '/admin/vendor_reviews/reviews', reviews: @vendor.vendor_reviews.order(id: :desc) %>    
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('.chosen-select').chosen({width: "100%"});
+    })
+</script>

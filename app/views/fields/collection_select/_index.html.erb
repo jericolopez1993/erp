@@ -1,0 +1,30 @@
+<%#
+# Select Index Partial
+
+This partial renders a selectable text attribute,
+to be displayed on a resource's index page.
+
+## Local variables:
+
+- `field`:
+  An instance of [Administrate::Field::Select][1].
+  A wrapper around the attribute pulled from the database.
+
+[1]: http://www.rubydoc.info/gems/administrate/Administrate/Field/Select
+%>
+<% if field.data %>
+    <% if field.resource.has_attribute?(:billing_address) %>
+        <% address = Address.find(field.resource.billing_address) %>
+        <%= (address.street.nil? ? '' : (address.street + ', ')) + (address.city.nil? ? '' : (address.city + ' ')) + (address.state.nil? ? '' : (address.state + ', ')) + (address.state.nil? ? '' : (address.state + ', ')) + (address.country.nil? ? '' : address.country) %>
+    <% end %>
+    <% if field.resource.has_attribute?(:product_id) %>
+
+        <% if field.resource.product_id.present? %>
+            <% if Product.where(:id => field.resource.product_id).present? %>
+            <% product = Product.find(field.resource.product_id) %>
+                <%= product.name %>
+            <% end %>
+        <% end %>
+    <% end %>
+
+<% end %>
