@@ -80,3 +80,7 @@ Thumbs.db
 /public
 # Elastic Beanstalk Files
 >>>>>>> First Commit
+
+/config/master.key
+
+/config/credentials/production.key
