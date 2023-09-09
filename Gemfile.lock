@@ -1543,6 +1543,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.2.2)
+    content_disposition (1.0.0)
     countries (2.1.4)
       i18n_data (~> 0.8.0)
       money (~> 6.9)
@@ -1567,6 +1568,8 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    down (5.4.1)
+      addressable (~> 2.8)
     erubi (1.12.0)
     execjs (2.8.1)
     fastimage (2.2.7)
@@ -1740,6 +1743,9 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    shrine (3.5.0)
+      content_disposition (~> 1.0)
+      down (~> 5.1)
     sixarm_ruby_unaccent (1.2.2)
     sort_alphabetical (1.1.0)
       unicode_utils (>= 1.2.2)
@@ -1833,6 +1839,7 @@ DEPENDENCIES
   sdoc
   seed_dump
   selenium-webdriver
+  shrine (~> 3.5)
   spring
   spring-watcher-listen (~> 2.0.1)
   summernote-rails (~> 0.8.10.0)
