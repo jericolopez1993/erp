@@ -47,6 +47,8 @@ Rails.application.configure do
 
   config.assets.compile = true
 
+  config.active_storage.service = :local
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
