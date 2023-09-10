@@ -11,8 +11,9 @@ development:
 production:
   adapter: postgresql
   encoding: unicode
-  database: <%= ENV['RDS_DB_NAME'] %>
-  username: <%= ENV['RDS_USERNAME'] %>
-  password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
+  pool:     5
+  database: erp_production
+  username: postgres_prod
+  password: qOP0xLmL7QB2zwCUFwBgApDBoSWAmmSq
+  host: dpg-cjukajd175es73a1m7s0-a.oregon-postgres.render.com
+  port: 5432
